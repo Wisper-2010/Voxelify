@@ -1,6 +1,6 @@
 <p align="center"><img src="icon-192.png" width="96" alt="Voxelify icon"></p>
 
-# Voxelify ⚡ · `v1.4`
+# Voxelify ⚡ · `v1.5`
 
 **Your music. Your neon. No ads, no subscriptions, no price tag.**
 
@@ -41,6 +41,7 @@ Then tap **Add files** and pick music. It works without internet after the first
 - **Your music on all your devices.** Profile → My devices: see what plays on your phone or computer, pause it, or continue it here from the same second.
 - **Colors your way.** Pick the outline and interface colors, and turn the neon glow on or off.
 - **Your own background.** Settings → Look → Your own background: 16 kinds and ready-made sets, your colors; share it in the gallery, or use one made by someone else.
+- **Servers:** text channels (replies, reactions, mentions, pins, pictures), voice channels with camera, screen and shared music (up to 10 people, directly between devices), roles and permissions, private channels, invites, statuses.
 - **A library for every account:** switching the account switches the music. The list of tracks is kept on the account; files stay on the device, and on a new device tracks from Audius and the Internet Archive download again.
 - **Leaderboard** and **roles of the team** with badges.
 - **Profile styles:** a status, name effects and fonts, card patterns, avatar shapes, covers, frames and stickers, and up to 3 badges next to your name.
@@ -93,7 +94,7 @@ Only publish music you made or have the rights to. Anyone can report a track; so
 
 - Your music files stay on your device and are never uploaded.
 - Network features are used only when you use them: the online music search and radio, lyrics search, listening rooms (devices connect directly), and the profile in the cloud if you sign in.
-- Public: your profile, published tracks, likes and follows. Chats are stored in the cloud and are not end-to-end encrypted. The cloud copy can be read only by your account (and, technically, by the owner of the Firebase project). The leaderboard shows how long you have listened; you can leave it there. The list of tracks of your account is readable only by you. The OBS link shows what you play to anyone who has it.
+- Public: your profile, published tracks, likes and follows. Chats are stored in the cloud and are not end-to-end encrypted. The cloud copy can be read only by your account (and, technically, by the owner of the Firebase project). Server messages can be read by the members who see the channel (and, technically, by the owner of the Firebase project); they are not end-to-end encrypted. Voice connects people directly, so members of a voice channel can technically learn each other’s IP address. The leaderboard shows how long you have listened; you can leave it there. The list of tracks of your account is readable only by you. The OBS link shows what you play to anyone who has it.
 - Settings → Privacy can delete your history or **all data**. Deleting all data also deletes profiles that are not linked to Google or e-mail; linked profiles stay in the cloud and you can sign in again.
 
 ## If something doesn't work

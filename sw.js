@@ -4,7 +4,7 @@
 // - other same-origin files: from cache instantly, refreshed in the background;
 // - other sites (e.g. the lyrics search on lrclib.net) are never touched.
 // To ship an update of the shell, bump VERSION: old caches are deleted on activate.
-const VERSION='voxelify.v1.4-2';
+const VERSION='voxelify.v1.5-1';
 const SHELL = ['./', 'index.html', 'firebase-config.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -52,4 +52,16 @@ self.addEventListener('fetch', e => {
       return hit || net;
     })
   );
+});
+
+// a notification carries no text: what was written stays between the people
+self.addEventListener('push', e => {
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(l => {
+    if (l.some(c => c.visibilityState === 'visible')) return;
+    return self.registration.showNotification('Voxelify', { body: /^ru/i.test(self.navigator.language) ? 'Новое сообщение или звонок' : 'New message or call', icon: 'icon-192.png', badge: 'icon-192.png', tag: 'vx' });
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(l => l.length ? l[0].focus() : self.clients.openWindow('./')));
 });
