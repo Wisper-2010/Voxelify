@@ -40,18 +40,25 @@
   ],
   "screenshots": [
     {
-      "src": "screenshots/player.png",
-      "sizes": "780x1560",
-      "type": "image/png",
+      "src": "screenshots/player.jpg",
+      "sizes": "600x1299",
+      "type": "image/jpeg",
       "form_factor": "narrow",
       "label": "Player"
     },
     {
-      "src": "screenshots/settings.png",
-      "sizes": "780x1560",
-      "type": "image/png",
+      "src": "screenshots/home.jpg",
+      "sizes": "600x1299",
+      "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Settings"
+      "label": "Home"
+    },
+    {
+      "src": "screenshots/desktop.jpg",
+      "sizes": "1440x900",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "On a computer"
     }
   ],
   "share_target": {
