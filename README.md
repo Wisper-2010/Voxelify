@@ -53,7 +53,7 @@ Then tap **Add files** and pick music. It works without internet after the first
 
 **Look**
 - Over 100 themes (Settings → Appearance → Ready-made styles), any neon color, rainbow neon. Profiles with a check mark can also use their own picture or video as a background.
-- **11 animated backgrounds that move to the beat:** fire, water, rain, snow, forest, space, aurora, sakura, synthwave (a night drive with palms and a sunset), matrix, lava lamp, each in 3 variants and full of little details.
+- **11 animated backgrounds that move to the beat:** fire, water, rain, snow, forest, space, aurora, sakura, synthwave (a night drive with palms and a sunset), matrix, lava lamp, each in 3 variants, painted in detail: cabins, a reef, a lighthouse, planets, a campfire. They lower their own quality on slow devices.
 - **Secrets** are hidden in the app. Find them to unlock profile covers, stickers and avatar frames.
 - **Visualizer:** 7 kinds, your own height and sensitivity.
 - **Guide book:** how everything works, in Profile and Settings, in all 11 languages.
