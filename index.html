@@ -2309,7 +2309,7 @@ function tplStart(name,pic,V){V=+V||0;const c=document.createElement('canvas'),x
     for(let k=0;k<26;k++){const yy=ly+((k*37+t*6)%(H-ly)),a2=.05+.04*Math.sin(t+k);x.fillStyle=`hsla(${h+20} 80% 80% / ${a2})`;x.fillRect((k*91)%W,yy,W*.12,.7)}}
    else{x.fillStyle=`hsl(${h} 40% 3%)`;x.beginPath();x.moveTo(0,H);for(let i=0;i<=W;i+=4)x.lineTo(i,H*.82-Math.abs(Math.sin(i/W*5+1))*H*.1-Math.sin(i/W*17)*H*.015);x.lineTo(W,H);x.fill()}}
   if(!pic)extra(t,ts,h,pw,fk,hit,B,dt);
- };loop()}
+ };try{loop()}catch(e){console.warn('background',e)}}
 function bgRender(){const tp=BGT.includes(cfg.bgtpl)?cfg.bgtpl:'',pic=cfg.bgon&&bgUrl?bgUrl:'',want=(pic||tp)?pic+'|'+tp+'|'+cfg.bgvar:'';if(want===bgShown)return;bgShown=want;tplStop();const box=$('bgl');box.innerHTML='';if(!want)return;
  if(pic){const m=document.createElement(bgType==='video'?'video':'img');m.src=pic;m.alt='';
   if(bgType==='video'){m.muted=true;m.loop=true;m.autoplay=true;m.playsInline=true;m.setAttribute('playsinline','');const p=m.play&&m.play();p&&p.catch&&p.catch(()=>{})}
@@ -4201,7 +4201,7 @@ function cbImgOf(s){if(s.k!=='image'||!s.img)return null;const im=new Image();im
 function cbStart(){const c=document.createElement('canvas'),x=c.getContext('2d');$('bgl').appendChild(c);const st={img:cbImgOf(CB)};let W,H;const k=CB.k==='image'?1.5:2;
  tplRz=()=>{W=c.width=Math.max(160,Math.round(innerWidth/k));H=c.height=Math.max(90,Math.round(innerHeight/k))};tplRz();addEventListener('resize',tplRz);const t0=performance.now();
  let lf=0;const loop=()=>{const nw=performance.now();if(nw-lf>=30){lf=nw;cbDraw(x,W,H,(nw-t0)/1000,CB,st)}if(!SAVER&&!matchMedia('(prefers-reduced-motion:reduce)').matches)tplRaf=requestAnimationFrame(loop);else tplRaf=0};
- if(st.img&&!st.img.complete)st.img.onload=()=>{if(!tplRaf)loop()};loop()}
+ if(st.img&&!st.img.complete)st.img.onload=()=>{if(!tplRaf)loop()};try{loop()}catch(e){console.warn('background',e)}}
 BGT.push('custom');
 const bgRender36=bgRender;bgRender=function(){if(cfg.bgtpl==='custom'&&!(cfg.bgon&&bgUrl)){const want='custom|'+JSON.stringify([CB.k,CB.c,CB.sp,CB.dn,CB.img.length]);if(want===bgShown)return;bgShown=want;tplStop();$('bgl').innerHTML='';cbStart();return}bgRender36()};
 const syncLook36=syncLook;syncLook=function(){syncLook36();if(cfg.bgtpl==='custom')$('fvfld').hidden=true};
@@ -4652,8 +4652,8 @@ const syncSet40=syncSet;syncSet=function(){syncSet40();vizUI()};vizUI();
 const draw40=draw;draw=function(){draw40();const l=$('list');l.classList.toggle('bigl',l.childElementCount>150)};
 
 /* ================= round 22: the night drive (Synthwave and Neon grid), drawn in real perspective ================= */
-const DRV={palms:null,hills:null};
-const drvRnd=sd=>()=>{sd|=0;sd=sd+0x6D2B79F5|0;let q=Math.imul(sd^sd>>>15,1|sd);q=q+Math.imul(q^q>>>7,61|q)^q;return((q^q>>>14)>>>0)/4294967296};
+var DRV;
+function drvRnd(sd){return()=>{sd|=0;sd=sd+0x6D2B79F5|0;let q=Math.imul(sd^sd>>>15,1|sd);q=q+Math.imul(q^q>>>7,61|q)^q;return((q^q>>>14)>>>0)/4294967296}}
 /* a palm as a picture: a bent ringed trunk and feathered leaves, lit from the sun side */
 function drvPalm(seed){const R=drvRnd(seed),c=document.createElement('canvas');c.width=360;c.height=480;const x=c.getContext('2d'),bx=180,by=476,lean=(R()-.5)*70,tx=bx+lean,ty=165+R()*25,q=(p,a,b,d)=>(1-p)*(1-p)*a+2*p*(1-p)*b+p*p*d,cx=bx-lean*.35,cy=(by+ty)/2;
  for(let i=0;i<=110;i++){const p=i/110,X=q(p,bx,cx,tx),Y=q(p,by,cy,ty),w=(p<.06?13-p*60:9.5-p*4.2)+(i%5===0?1.2:0),g=x.createLinearGradient(X-w,0,X+w,0);g.addColorStop(0,'#0a0413');g.addColorStop(.6,i%5===0?'#2a1430':'#1b0c24');g.addColorStop(1,i%5===0?'#d9628c':'#8a3767');x.fillStyle=g;x.fillRect(X-w,Y-3,w*2,5)}
@@ -4666,7 +4666,7 @@ function drvPalm(seed){const R=drvRnd(seed),c=document.createElement('canvas');c
 /* mountains: the same ridge every time, as heights 0..1 */
 function drvHills(){const mk=(sd,rough)=>{const R=drvRnd(sd);let p=[.35,.35+R()*.2];for(let s=0;s<8;s++){const o=[];for(let i=0;i<p.length-1;i++)o.push(p[i],(p[i]+p[i+1])/2+(R()-.5)*rough*Math.pow(.56,s));o.push(p[p.length-1]);p=o}return p.map(v=>Math.max(.04,Math.min(1,v)))};return[mk(5,.95),mk(21,.8)]}
 /* o: road (distance travelled), P (palette), city, palms 0..1, fk (kick), bare (a picture is behind: no sky) */
-function drvScene(x,W,H,t,o){const P=o.P,hz=H*.6,fk=o.fk||0,cxm=W/2,m=Math.min(W,H);if(!DRV.palms){DRV.palms=[1,2,3,4].map(i=>drvPalm(i*37));DRV.hills=drvHills()}
+function drvScene(x,W,H,t,o){const P=o.P,hz=H*.6,fk=o.fk||0,cxm=W/2,m=Math.min(W,H);if(!DRV)DRV={palms:[1,2,3,4].map(i=>drvPalm(i*37)),hills:drvHills()};
  const A=(a,f)=>{const s=x.globalAlpha;x.globalAlpha=s*a;f();x.globalAlpha=s},LG=(y0,y1,st)=>{const g=x.createLinearGradient(0,y0,0,y1);st.forEach(([p,c])=>g.addColorStop(p,c));return g};
  /* sky */
  if(!o.bare){x.fillStyle=LG(0,hz,[[0,P.top],[.5,P.mid],[.86,P.low],[1,P.hot]]);x.fillRect(0,0,W,hz+1)}
@@ -4714,8 +4714,8 @@ function drvScene(x,W,H,t,o){const P=o.P,hz=H*.6,fk=o.fk||0,cxm=W/2,m=Math.min(W
   x.globalCompositeOperation='lighter';A(.32+fk*.2,()=>{for(const sx of[-.49,.49]){const g=x.createLinearGradient(0,0,0,u*.9);g.addColorStop(0,'#ff2b4e');g.addColorStop(1,'rgba(255,43,78,0)');x.fillStyle=g;x.fillRect(sx*u-u*.16,u*.02,u*.32,u*.9)}});x.restore()}
  {const per=64,z=per-((o.road*2.1)%per);if(z>zN&&z<46){const s=F/z/1.6,px=SX(-1.45,z),y=SY(z);x.save();x.globalCompositeOperation='lighter';A(Math.min(1,(46-z)/12),()=>{for(const dx of[-.42,.42]){const lx=px+dx*s,ly=y-s*.33,r=s*.5+m*.012,g=x.createRadialGradient(lx,ly,0,lx,ly,r);g.addColorStop(0,'#fff');g.addColorStop(.18,'#fff3d0');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(lx-r,ly-r,r*2,r*2)}});x.restore()}}
  x.fillStyle=LG(H*.8,H,[[0,'rgba(0,0,0,0)'],[1,'rgba(0,0,0,.45)']]);x.fillRect(0,H*.8,W,H*.2)}
-const drvHsl=(h,s,l)=>`hsl(${((h%360)+360)%360} ${s}% ${l}%)`;
-const drvPal=(h,city)=>({top:drvHsl(h-35,70,city?5:7),mid:drvHsl(h-15,65,city?13:20),low:drvHsl(h+25,72,city?30:42),hot:drvHsl(h+70,90,city?46:62),glow:drvHsl(h+45,95,62),line:drvHsl(h,100,66),sun1:drvHsl(50,100,68),sun2:drvHsl(h+55,100,60),hill1:drvHsl(h-10,50,20),hill1b:drvHsl(h+25,60,34),hill2:drvHsl(h-20,55,9),hill2b:drvHsl(h+5,55,17),gnd1:drvHsl(h+20,60,20),gnd2:drvHsl(h-15,60,7),road1:drvHsl(h+25,40,24)});
+function drvHsl(h,s,l){return`hsl(${((h%360)+360)%360} ${s}% ${l}%)`}
+function drvPal(h,city){return{top:drvHsl(h-35,70,city?5:7),mid:drvHsl(h-15,65,city?13:20),low:drvHsl(h+25,72,city?30:42),hot:drvHsl(h+70,90,city?46:62),glow:drvHsl(h+45,95,62),line:drvHsl(h,100,66),sun1:drvHsl(50,100,68),sun2:drvHsl(h+55,100,60),hill1:drvHsl(h-10,50,20),hill1b:drvHsl(h+25,60,34),hill2:drvHsl(h-20,55,9),hill2b:drvHsl(h+5,55,17),gnd1:drvHsl(h+20,60,20),gnd2:drvHsl(h-15,60,7),road1:drvHsl(h+25,40,24)}}
 /* the same road in “Your own background → Neon grid” with the person's colors */
 const cbDraw42=cbDraw;cbDraw=function(x,W,H,t,s,st){if(s.k!=='grid')return cbDraw42(x,W,H,t,s,st);const hx=h=>{const[r,g,b]=cbRgb(h).map(v=>v/255),mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;return d?60*(mx===r?((g-b)/d+6)%6:mx===g?(b-r)/d+2:(r-g)/d+4):0},mix=(h,k)=>`rgb(${cbRgb(h).map(v=>Math.round(v*k)).join(',')})`,[c1,c2,c3]=s.c;
  drvScene(x,W,H,t,{road:t*4.2*s.sp/5+500,bend:Math.sin(t*.09)*.8,palms:s.dn/10,fk:0,city:false,P:{...drvPal(hx(c2),false),top:mix(c1,.12),mid:mix(c1,.4),low:c2,glow:c2,line:c1,sun1:c3,sun2:c2}})};
