@@ -1,0 +1,11 @@
+# Your music and the old Python version's data do not belong in the repository
+python-version/media/
+python-version/library.json
+*.mp3
+*.mp4
+*.m4a
+*.wav
+*.flac
+*.ogg
+__pycache__/
+.DS_Store
