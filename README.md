@@ -53,7 +53,8 @@ Then tap **Add files** and pick music. It works without internet after the first
 **Look**
 - Over 90 themes (Settings → Appearance → Ready-made styles), any neon color, rainbow neon, your own picture or video as a background.
 - **11 animated backgrounds that move to the beat:** fire, water, rain, snow, forest, space, aurora, sakura, synthwave, matrix, lava lamp, each in 3 variants and full of little details.
-- **Easter eggs** are hidden in the backgrounds. Find them to unlock profile covers, stickers and avatar frames.
+- **Secrets** are hidden in the app. Find them to unlock profile covers, stickers and avatar frames.
+- **Guide book:** how everything works, in Profile and Settings.
 - Winter mood (snow and a garland) from December 15 to January 15.
 
 **Profile**
