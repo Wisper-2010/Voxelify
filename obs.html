@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Voxelify OBS widget</title>
+<style>
+:root{--h:265;--k:1}*{box-sizing:border-box}html,body{margin:0;height:100%;background:transparent!important;overflow:hidden;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans",sans-serif;color:#fff}
+#w{position:absolute;left:14px;bottom:14px;transform-origin:left bottom;transform:scale(var(--k));opacity:0;transition:opacity .6s}#w.on{opacity:1}
+.card{position:relative;display:flex;gap:16px;align-items:center;width:560px;padding:14px 18px 14px 14px;border-radius:22px;background:rgba(10,6,22,.78);box-shadow:0 0 0 2px hsl(var(--h) 100% 66%/.9),0 0 26px hsl(var(--h) 100% 60%/.55);overflow:hidden}
+#cv{flex:none;width:104px;height:104px;border-radius:14px;background:linear-gradient(135deg,hsl(var(--h) 80% 60%),hsl(calc(var(--h) + 55) 75% 30%)) center/cover;box-shadow:0 0 16px hsl(var(--h) 100% 60%/.5);display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:900}
+.i{flex:1;min-width:0}.l{overflow:hidden;white-space:nowrap}.l span{display:inline-block}.l.m span{animation:mq 11s linear infinite alternate}@keyframes mq{0%,15%{transform:none}85%,100%{transform:translateX(var(--d,0))}}
+#n{font-size:26px;font-weight:800;text-shadow:0 0 12px hsl(var(--h) 100% 60%/.8)}#a{font-size:17px;color:hsl(var(--h) 100% 84%)}
+#p{height:5px;border-radius:3px;margin-top:9px;background:rgba(255,255,255,.18);overflow:hidden}#p i{display:block;height:100%;width:0;background:linear-gradient(90deg,hsl(var(--h) 100% 65%),hsl(calc(var(--h) + 60) 100% 66%))}
+#v{display:block;width:100%;height:30px;margin-top:6px}.nov #v{display:none}
+.bar .card{width:760px;padding:8px 18px 8px 8px;border-radius:99px}.bar #cv{width:58px;height:58px;border-radius:50%;font-size:26px}.bar #n{font-size:20px}.bar #a{font-size:14px}.bar #v{position:absolute;right:26px;top:16px;width:210px;height:40px;margin:0}.bar .i{padding-right:230px}.bar.nov .i{padding-right:10px}
+.mini .card{background:none;box-shadow:none;padding:0}.mini #cv,.mini #p{display:none}.mini #n,.mini #a{text-shadow:0 2px 6px #000,0 0 14px hsl(var(--h) 100% 50%)}
+</style></head><body><div id="w"><div class="card"><div id="cv"></div><div class="i"><div class="l" id="nl"><span id="n"></span></div><div class="l" id="al"><span id="a"></span></div><div id="p"><i></i></div><canvas id="v" width="420" height="30"></canvas></div></div></div>
+<script>
+(()=>{const $=i=>document.getElementById(i),q=new URLSearchParams('c='+location.hash.slice(1)),code=(q.get('c')||'').toLowerCase().replace(/[^a-z0-9]/g,''),st=q.get('st')||'card',w=$('w');
+if(st==='bar'||st==='mini')w.classList.add(st);if(q.get('viz')==='0')w.classList.add('nov');document.documentElement.style.setProperty('--k',Math.max(.5,Math.min(2,(+q.get('sz')||100)/100)));
+const ICE=[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']},{urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'],username:'peerjs',credential:'peerjsp'}],host='voxelify-obs-'+code;
+let now=null,at=0,lv=[],cur=[],hue=265,ws=null,pc=null,ok=false,tm=0;
+const fit=(l,s)=>{l.classList.remove('m');const d=l.clientWidth-s.scrollWidth;if(d<-2){l.style.setProperty('--d',(d-6)+'px');l.classList.add('m')}};
+function show(m){if(!now||now.name!==m.name||now.artist!==m.artist){$('n').textContent=m.name;$('a').textContent=m.artist;setTimeout(()=>{fit($('nl'),$('n'));fit($('al'),$('a'))},30);$('cv').textContent=m.cover?'':(m.name||'V').trim().slice(0,1).toUpperCase()}
+ $('cv').style.backgroundImage=typeof m.cover==='string'&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(m.cover)?`url("${m.cover}")`:'';now=m;at=performance.now();hue=+m.hue||265;document.documentElement.style.setProperty('--h',hue);w.classList.toggle('on',!!m.name&&!!m.play)}
+function msg(d){let m;try{m=JSON.parse(d)}catch(e){return}if(m.t==='now'){m.name=String(m.name||'').slice(0,200);m.artist=String(m.artist||'').slice(0,200);show(m)}else if(m.t==='v'&&Array.isArray(m.d))lv=m.d.slice(0,28).map(x=>Math.max(0,Math.min(255,+x||0)))}
+function retry(ms){clearTimeout(tm);ok=false;const o=pc;pc=null;try{if(o){o.onconnectionstatechange=null;if(o.dc)o.dc.onclose=null;o.close()}}catch(e){}try{if(ws){clearInterval(ws.hb);ws.onclose=null;ws.close()}}catch(e){}ws=pc=null;w.classList.remove('on');tm=setTimeout(go,ms||5000)}
+function go(){if(code.length<8)return;const me='voxelify-o-'+Math.random().toString(36).slice(2,12),cand=[];try{ws=new WebSocket('wss://0.peerjs.com/peerjs?key=peerjs&id='+me+'&token='+Math.random().toString(36).slice(2)+'&version=1.5.4')}catch(e){retry();return}
+ const my=ws,send=(type,payload)=>{try{my.send(JSON.stringify({type,payload,dst:host}))}catch(e){}};ws.onclose=()=>{if(ws===my&&!ok)retry()};
+ ws.onmessage=async e=>{let m;try{m=JSON.parse(e.data)}catch(x){return}const pl=m.payload||{};
+  if(m.type==='OPEN'){my.hb=setInterval(()=>{if(my.readyState===1)my.send('{"type":"HEARTBEAT"}')},5000);pc=new RTCPeerConnection({iceServers:ICE});pc.onicecandidate=x=>{if(x.candidate)send('CANDIDATE',{candidate:x.candidate.toJSON(),type:'data',connectionId:'obs'})};pc.onconnectionstatechange=()=>{if(/failed|closed|disconnected/.test(pc.connectionState))retry(3000)};
+   const dc=pc.dc=pc.createDataChannel('obs',{ordered:true});dc.onopen=()=>{ok=true;clearTimeout(tm)};dc.onmessage=x=>msg(x.data);dc.onclose=()=>retry(3000);await pc.setLocalDescription(await pc.createOffer());send('OFFER',{sdp:{type:pc.localDescription.type,sdp:pc.localDescription.sdp},type:'data',connectionId:'obs',label:'dc',reliable:true,serialization:'json',browser:'chrome'});clearTimeout(tm);tm=setTimeout(()=>{if(!ok)retry(3000)},15000)}
+  else if(m.type==='ANSWER'&&pl.sdp&&pc&&!pc.remoteDescription){await pc.setRemoteDescription(pl.sdp);cand.splice(0).forEach(c=>pc.addIceCandidate(c).catch(()=>{}))}
+  else if(m.type==='CANDIDATE'&&pl.candidate&&pc){pc.remoteDescription?pc.addIceCandidate(pl.candidate).catch(()=>{}):cand.push(pl.candidate)}
+  else if(m.type==='EXPIRE'&&!ok)retry(6000)}}
+const c=$('v'),x=c.getContext('2d');function frame(){requestAnimationFrame(frame);if(!now)return;const pos=now.pos+(now.play?(performance.now()-at)/1000*(now.rate||1):0);$('p').firstChild.style.width=now.dur?Math.min(100,pos/now.dur*100)+'%':'0';
+ const W=c.clientWidth,H=c.clientHeight;if(!W)return;if(c.width!==W)c.width=W;if(c.height!==H)c.height=H;x.clearRect(0,0,W,H);const n=lv.length;for(let i=0;i<n;i++){cur[i]=(cur[i]||0)+((now.play?lv[i]:0)-(cur[i]||0))*.35;const h=Math.max(2,cur[i]/255*H);x.fillStyle=`hsl(${hue+i*3} 100% 66%)`;x.fillRect(i*W/n+1,H-h,W/n-2,h)}}
+frame();go();window.vxObs={msg}})();
+</script></body></html>

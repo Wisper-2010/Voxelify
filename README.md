@@ -1,6 +1,6 @@
 <p align="center"><img src="icon-192.png" width="96" alt="Voxelify icon"></p>
 
-# Voxelify ⚡ · `v1.2`
+# Voxelify ⚡ · `v1.3`
 
 **Your music. Your neon. No ads, no subscriptions, no price tag.**
 
@@ -44,11 +44,13 @@ Then tap **Add files** and pick music. It works without internet after the first
 - **Profile styles:** a status, name effects and fonts, card patterns, avatar shapes, covers, frames and stickers, and up to 3 badges next to your name.
 - **Internet radio:** tens of thousands of stations.
 - **“For you”:** pick the genres you like and get a stream of free music.
-- **Listen together:** create a room, send the link, and friends hear the same music at the same moment on their own devices. Chat, hearts, track requests.
+- **Listen together:** create a room, send the link, and friends hear the same music at the same moment on their own devices. Chat, hearts, track requests, a **DJ panel**, a **vote for the next track** and a **shared playlist** that shows who added what.
 
 **Sound**
 - Equalizer, volume leveling, boost, speed 0.1–16×, real crossfade, sleep timer.
 - **Slowed + reverb, Nightcore and 8D** with one tap (Settings → General or the Sound window).
+- **Reverb, pitch and bass sliders** with your own presets; crossfade stays as it was.
+- **Soundpad and virtual microphone:** sounds and music in Voxelify calls, or in Discord and games through a virtual audio cable (a browser can’t create a microphone itself).
 - Ringtone cutter, voice commands, a mini player over other windows (on a computer), playlists by tempo (Running, Workout, Calm).
 
 **Look**
@@ -65,7 +67,13 @@ Then tap **Add files** and pick music. It works without internet after the first
 - The **⋯** button in the profile: Edit, Profile settings, Switch account, Sign out.
 - A blue check mark means a **verified profile**. The glowing heart seal means the person **knows the founder**. The shield belongs to the Voxelify team.
 
+**Share and stream**
+- **Voxelify Wrapped:** neon cards with your statistics for social networks.
+- **OBS widget:** a transparent panel with the current track and a visualizer (Profile → OBS widget).
+
 **Every day**
+- **Import a text list or CSV:** tracks are searched in your library, Audius and the Internet Archive.
+- **Cloud copy** of settings, albums, favorites and statistics in your linked profile. Only you can read it; music files are not uploaded.
 - Alarm with your own music, focus timer, car mode, synced lyrics, a track editor (title, artist, cover, lyrics), backup of the whole library in one file.
 - 11 languages: English, Русский, Français, 中文, 日本語, 한국어, Español, Nederlands, Հայերեն, ქართული, العربية.
 
@@ -83,7 +91,7 @@ Only publish music you made or have the rights to. Anyone can report a track; so
 
 - Your music files stay on your device and are never uploaded.
 - Network features are used only when you use them: the online music search and radio, lyrics search, listening rooms (devices connect directly), and the profile in the cloud if you sign in.
-- Public: your profile, published tracks, likes and follows. Chats are stored in the cloud and are not end-to-end encrypted.
+- Public: your profile, published tracks, likes and follows. Chats are stored in the cloud and are not end-to-end encrypted. The cloud copy can be read only by your account (and, technically, by the owner of the Firebase project). The OBS link shows what you play to anyone who has it.
 - Settings → Privacy can delete your history or **all data**. Deleting all data also deletes profiles that are not linked to Google or e-mail; linked profiles stay in the cloud and you can sign in again.
 
 ## If something doesn't work
