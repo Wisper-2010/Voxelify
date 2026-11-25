@@ -15,7 +15,7 @@
 <script>
 (()=>{const $=i=>document.getElementById(i),q=new URLSearchParams('c='+location.hash.slice(1)),code=(q.get('c')||'').toLowerCase().replace(/[^a-z0-9]/g,''),st=q.get('st')||'card',w=$('w');
 if(st==='bar'||st==='mini')w.classList.add(st);if(q.get('viz')==='0')w.classList.add('nov');document.documentElement.style.setProperty('--k',Math.max(.5,Math.min(2,(+q.get('sz')||100)/100)));
-const ICE=[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']},{urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'],username:'peerjs',credential:'peerjsp'}],host='voxelify-obs-'+code;
+const ICE=[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302','stun:stun.cloudflare.com:3478']}],host='voxelify-obs-'+code;
 let now=null,at=0,lv=[],cur=[],hue=265,ws=null,pc=null,ok=false,tm=0;
 const fit=(l,s)=>{l.classList.remove('m');const d=l.clientWidth-s.scrollWidth;if(d<-2){l.style.setProperty('--d',(d-6)+'px');l.classList.add('m')}};
 function show(m){if(!now||now.name!==m.name||now.artist!==m.artist){$('n').textContent=m.name;$('a').textContent=m.artist;setTimeout(()=>{fit($('nl'),$('n'));fit($('al'),$('a'))},30);$('cv').textContent=m.cover?'':(m.name||'V').trim().slice(0,1).toUpperCase()}
