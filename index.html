@@ -3618,7 +3618,7 @@ function loggedIn(){return!!accCur()}
 const origProfName=profName;
 /* ---------- Firebase (only when firebase-config.js has keys) ---------- */
 var FB=null,fbBusy=null;
-window.VX_AUTH=window.VX_AUTH||{github:false,discord:false,yandex:false,worker:'',turn:false,vapid:''}; // sign-in services, relay, notifications, see auth-worker
+window.VX_AUTH=window.VX_AUTH||{github:true,discord:true,yandex:true,worker:'',turn:false,vapid:''}; // sign-in services, relay, notifications, see auth-worker
 const fbOn=()=>!!(window.VX_FIREBASE&&window.VX_FIREBASE.apiKey);
 function loadJs(u){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=()=>no(new Error('load '+u));document.head.appendChild(s)})}
 async function fbInit(){if(FB)return FB;if(!fbOn())return null;if(fbBusy)return fbBusy;
