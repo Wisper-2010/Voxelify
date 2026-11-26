@@ -64,9 +64,10 @@ const often = (k, ms, n) => { if (last.size > 5000) last.clear(); const a = (las
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 export default {
   async fetch(req, env) {
-    const url = new URL(req.url), origin = new URL(env.SITE).origin, cors = { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'POST', vary: 'origin' };
+    const url = new URL(req.url), origin = new URL(env.SITE).origin, cors = { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'GET, POST', vary: 'origin' };
     const json = (o, s) => new Response(JSON.stringify(o), { status: s || 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...cors } });
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+    if (url.pathname === '/cfg') return json({ discord: !!(env.DISCORD_ID && env.DISCORD_SECRET && env.FB_KEY), yandex: !!(env.YANDEX_ID && env.YANDEX_SECRET && env.FB_KEY), turn: !!(env.TURN_ID && env.TURN_TOKEN), vapid: env.VAPID_PUBLIC && env.VAPID_PRIVATE && env.FB_KEY ? env.VAPID_PUBLIC : '' });
     if (url.pathname === '/turn' && req.method === 'POST') {
       if (!env.TURN_ID) return json({ e: 'off' }, 404);
       const u = await who(req, env); if (!u) return json({ e: 'auth' }, 401);

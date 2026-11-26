@@ -1,0 +1,14 @@
+// Cloudflare Worker "voxelify": sign-in with Discord and Yandex, relay for calls, notifications.
+// Cloudflare builds it from this repository on every push. Secrets are added in the Cloudflare dashboard, never here.
+{
+  "name": "voxelify",
+  "main": "auth-worker/worker.js",
+  "compatibility_date": "2025-09-01",
+  "workers_dev": true,
+  "keep_vars": true,
+  "vars": {
+    "SITE": "https://wisper-2010.github.io/Voxelify/",
+    "FB_PROJECT": "v0xelify"
+  },
+  "observability": { "enabled": true }
+}
