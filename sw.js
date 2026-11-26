@@ -4,7 +4,7 @@
 // - other same-origin files: from cache instantly, refreshed in the background;
 // - other sites (e.g. the lyrics search on lrclib.net) are never touched.
 // To ship an update of the shell, bump VERSION: old caches are deleted on activate.
-const VERSION='voxelify.v1.9-4';
+const VERSION='voxelify.v2.0-1';
 const SHELL = ['./', 'index.html', 'firebase-config.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
