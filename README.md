@@ -1,6 +1,6 @@
 <p align="center"><img src="icon-192.png" width="96" alt="Voxelify icon"></p>
 
-# Voxelify ⚡ · `v1.5`
+# Voxelify ⚡ · `v1.9`
 
 **Your music. Your neon. No ads, no subscriptions, no price tag.**
 
